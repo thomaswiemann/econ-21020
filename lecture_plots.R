@@ -29,4 +29,22 @@ plt <- ggplot() +
   xlim(c(-6.5, 6.5)) + 
   theme_classic(base_size = 20) +
   theme(text = element_text(size = 20, family="Times"))
-save_img(plt, "figures/lectures/lecture_2_normpdf.pdf", w = 8, h = 7)
+save_img(plt, "figures/lectures/lecture_2A_normpdf.pdf", w = 8, h = 7)
+
+# Plot of Chi^2 Density Functions 
+plt <- ggplot() + 
+  stat_function(fun = dchisq, args = list(df = 1), size = 1, col = "blue") +
+  annotate(geom="text", x=6, y=0.3, label="chi^{2}~(1)", 
+           parse = TRUE,  color="blue", size = 10) +
+  stat_function(fun = dchisq, args = list(df = 10), size = 1, col = "red") +
+  annotate(geom="text", x=14, y=0.125, label="chi^{2}~(10)", 
+           parse = TRUE,  color="red", size = 10) +
+  stat_function(fun = dchisq, args = list(df = 30), size = 1, col = "green") +
+  annotate(geom="text", x=33, y=0.08, label="chi^{2}~(30)", 
+           parse = TRUE,  color="green", size = 10) +
+  ylab("Density") + 
+  xlab("x") +
+  xlim(c(0, 50)) + 
+  theme_classic(base_size = 20) +
+  theme(text = element_text(size = 20, family="Times"))
+save_img(plt, "figures/lectures/lecture_2A_chi2pdf.pdf", w = 8, h = 7)
