@@ -72,7 +72,7 @@ for (s in 1:nsim) {
 # Plot distributions of estimators
 plt <- ggplot() + 
   geom_histogram(aes(x = est_mat[, 2], y =..density..), bins = 80) +
-  annotate(geom="text", x=mu + 0.1, y=1, label="mu", 
+  annotate(geom="text", x=mu - 0.15, y=0.05, label="mu", 
            parse = TRUE,  color="red", size = 10) +
   geom_vline(xintercept = mu, col = "red") + 
   ylab("Density") + 
@@ -81,10 +81,12 @@ plt <- ggplot() +
   ylim(c(0, 1.5)) +
   theme_classic(base_size = 20) +
   theme(text = element_text(size = 20,  family="Times"))
-save_img(plt, "figures/lectures/lecture_2A_chi2pdf.pdf", w = 8, h = 7)
+save_img(plt, "figures/lectures/lecture_3A_muhat2.pdf", w = 8, h = 7)
 
-ggplot() + 
+plt <- ggplot() + 
   geom_histogram(aes(x = est_mat[, 3], y =..density..), bins = 80) +
+  annotate(geom="text", x=mu - 0.15, y=0.05, label="mu", 
+           parse = TRUE,  color="red", size = 10) +
   geom_vline(xintercept = mu, col = "red") +
   ylab("Density") + 
   xlab(expression(hat(mu)[n]^(3))) +
@@ -92,16 +94,20 @@ ggplot() +
   ylim(c(0, 1.5)) +
   theme_classic(base_size = 20) +
   theme(text = element_text(size = 20,  family="Times"))
+save_img(plt, "figures/lectures/lecture_3A_muhat3.pdf", w = 8, h = 7)
 
-ggplot() + 
+plt <- ggplot() + 
   geom_histogram(aes(x = est_mat[, 4], y =..density..), bins = 80) +
   geom_vline(xintercept = mu, col = "red") +
+  annotate(geom="text", x=mu - 0.15, y=0.05, label="mu", 
+           parse = TRUE,  color="red", size = 10) +
   ylab("Density") + 
   xlab(expression(hat(mu)[n]^(4))) +
   xlim(c(-2, 4)) +
   ylim(c(0, 1.5)) +
   theme_classic(base_size = 20) +
   theme(text = element_text(size = 20,  family="Times"))
+save_img(plt, "figures/lectures/lecture_3A_muhat4.pdf", w = 8, h = 7)
 
 # Calculate Mean-Squared-Error
 squared_errors <- (est_mat - mu)^2
