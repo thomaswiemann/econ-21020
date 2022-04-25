@@ -114,7 +114,19 @@ squared_errors <- (est_mat - mu)^2
 mse_by_est <- apply(squared_errors, 2, mean)
 #> [1] 1.00000000 0.97166468 0.10052857 0.09188914
 
+# Lecture: Simple Linear Regression ============================================
 
+# Define the Yitzhaki weights for standard uniform
+omega <- function(x) {
+  return((6 * x * (1 - x) * ((0 <= x) & (x <= 1))))
+}#OMEGA
 
-
-
+# Plot of the Yitzhaki weights for standard uniform
+plt <- ggplot() + 
+  geom_function(fun = omega, size = 1) +
+  ylab(expression("Yitzhaki Weights "~omega~"(t)")) + 
+  xlab("t") +
+  xlim(c(-0.5, 1.5)) + 
+  theme_classic(base_size = 20) +
+  theme(text = element_text(size = 20, family="Times"))
+save_img(plt, "figures/lectures/lecture_6_yitzhakiweights.pdf", w = 8, h = 7)
