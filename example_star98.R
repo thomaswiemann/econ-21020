@@ -21,8 +21,11 @@ df <- read.csv("data/star98.csv")
 n <- nrow(df)
 
 # Define variables
-y <- df$math_scr
-w <- df$str
+y <- df$math_scr # Average math score
+w <- df$str # student-teacher ratio
+x <- df$avginc # average parental income
+
+# Histogram ====================================================================
 
 # Plot histogram of the student teacher ratio
 plt <- ggplot() + 
@@ -33,6 +36,8 @@ plt <- ggplot() +
   theme(text = element_text(size = 20,  family="Times"))
 save_img(plt, "figures/lectures/lecture_6B_starhist.pdf", w = 8, h = 7)
 
+# BLP-Coefficient ==============================================================
+
 # Compute OLS Coefficient
 beta <- cov(y, w) / var(w) # -1.938591
 alpha <- mean(y) - mean(w) * beta # 691.4174
@@ -42,66 +47,19 @@ epsilon <- y - alpha - w * beta
 se_numer <- sqrt(mean(epsilon^2 * (w - mean(w))^2))
 se <- (se_numer / var(w)) / sqrt(n) # 0.5191742
 
-
-
-
-
-
-# Compute OLS Coefficient
-beta <- cov(y, w) / var(w) 
-alpha <- mean(y) - mean(w) * beta # 
-
-# Compute standard error for beta
-epsilon <- y - alpha - w * beta
-se_numer <- sqrt(mean(epsilon^2 * (w - mean(w))^2))
-se <- (se_numer / var(w)) / sqrt(n)
-
-
-mean(epsilon^2 * w^2) - mean(epsilon * w)^2
-
-mean((epsilon - mean(epsilon)))
-
-
-
-# Computation of the ATE and its Approximate Sampling Distribution =============
-
-# Find treated and untreated individuals
-y_1 <- y[w == 1]
-y_0 <- y[w == 0]
-
-# Compute conditional averages
-mu_1 <- mean(y_1)
-mu_0 <- mean(y_0)
-ate <- mu_1 - mu_0
-ate
-
-# Compute standard error
-n <- length(y)
-p_1 <- mean(w == 1)
-p_0 <- mean(w == 0)
-se <- sqrt((var(y_1) / p_1 + var(y_0) / p_0) / n)
-se
-
-# Compute confidence set for pre-defined alpha
-alpha <- 0.05
-c_alpha <- qnorm(1 - alpha / 2)
-conf <- ate + c(-1, 1) * c_alpha * se
-conf
-
-# Hypothesis Testing ===========================================================
-
-# Compute test-statistic
-ate_0 <- 0
-Tn <- (mu_1 - mu_0 - ate_0) / se
-Tn
-
-# Compute p-value for H_0: mu_1 - mu_0 <= 0
-1 - pnorm(Tn)
-
-# Compute p-value for H_0: mu_1 - mu_0 =' 0
-2 * (1 -  pnorm(abs(Tn)))
-
 # Balance Test =================================================================
 
-# Re-run previous code (except line 13!) but now consider
-y <- df$age
+# Compute OLS estimate of income on student-teacher ratio
+beta_x <- cov(x, w) / var(w) # -0.886878
+alpha_x <- mean(x) - mean(w) * beta_x # 32.73525
+
+# Compute standard error for beta_x
+epsilon_x <- x - alpha_x - w * beta_x
+se_numer_x <- sqrt(mean(epsilon_x^2 * (w - mean(w))^2))
+se_x <- (se_numer_x / var(w)) / sqrt(n) # 0.2230173
+
+# Compute the test statistic
+Tn <- abs(beta_x) / se_x # 3.976722
+
+# Compute the p-value
+2 * (1 - pnorm(Tn)) # 6.987165e-05
