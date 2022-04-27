@@ -16,14 +16,14 @@ source("_functions//fun_utilities.R") # imports save_img()
 
 # Data =========================================================================
 
-# Load the list.csv data
+# Load the star98.csv data
 df <- read.csv("data/star98.csv")
 n <- nrow(df)
 
 # Define variables
 y <- df$math_scr # Average math score
-w <- df$str # student-teacher ratio
-x <- df$avginc # average parental income
+w <- df$str # Student-teacher ratio
+x <- df$avginc # Average parental income
 
 # Histogram ====================================================================
 
@@ -46,6 +46,9 @@ alpha <- mean(y) - mean(w) * beta # 691.4174
 epsilon <- y - alpha - w * beta
 se_numer <- sqrt(mean(epsilon^2 * (w - mean(w))^2))
 se <- (se_numer / var(w)) / sqrt(n) # 0.5191742
+
+# Compute 95% confidence interval
+beta + c(-1, 1) * qnorm(0.975) * se
 
 # Balance Test =================================================================
 
