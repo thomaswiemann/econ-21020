@@ -6,7 +6,7 @@
 
 # Data =========================================================================
 
-# Load the list.csv data
+# Load the pisa19.csv data
 df <- read.csv("data/pisa19.csv")
 
 # Define variables
