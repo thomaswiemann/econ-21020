@@ -105,4 +105,5 @@ mean(w == 0 & x == 0) # 0.5740797
 # Balance Test =================================================================
 
 # Check whether CATE of 401(k) on incomes are all zero
-test_SO(x_tld, w, x) # 6.957109e+02 8.477902e-152
+test_SO(x_tld, w, x) # 695.7109 8.477902e-152
+
